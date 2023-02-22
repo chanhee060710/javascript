@@ -41,5 +41,83 @@ $("li:only-child").css("border","1px solid salmon")
 $("#menu li").slice(1,3).css("background-color","salmon")
 
 // jQuery에서 제공하는 배열 관련 메서드 /////
-//each() $.each
+//each(function) $.each
+// $.each($("요소선택"),function)
+//배열에 저장된 데이터만큼 function 반복 실행 (for문 역할)
 
+const obj = [{
+    "area":"서울",
+    name: "디지텍고학생"
+},
+{
+    "area":"대전",
+    name:"chanhee"
+},
+{
+    "area":"부산",
+    name: "갈매기"
+}
+];
+//객체가 담겨있는 배열을 순화
+//function(인덱스,값)
+$(obj).each(function(i, data) {
+    console.log(i+ ": ",data)
+});
+//1. 태그가 담겨있는 배열을 순화
+$.each($("#menu2 li"), function(i,data){
+    console.log(i+ ": ",data);
+});
+//매개변수가 1개로! this 키워드 사용
+//인덱스로 접근한 데이터 -> $(this)
+$.each($("#menu2 li"), function(i,data){
+    console.log(i+ ": ",$(this));
+});
+
+//$.map(): 배열에 저장된 데이터 수만큼 메서드를 반복 실행
+//메서드에서 반환된 데이터를 가지고 새로운 배열을 만들어서 반환<
+//obj라는 배열에서 area가 대전인 요소만 찾는 배열을 생성
+//filter 기능과 비슷하지만, 기존데이터를 응용한 새로운 데이터를 생성할때good
+//map 함수에 전달하는 공백함수(데이터,인덱스)(조건에 맞는 데이터 반환)
+const result = $.map(obj, function(data,idx){
+    if(data.area =="대전"){
+        console.log(idx)
+        return {...data,age:20};
+    }
+});
+
+const result2 = $.map(obj, function(data,idx){
+    if(data.area =="대전"){
+        console.log(idx)
+        return {...data,age:20};
+    }
+});
+//$.grep(): 배열에 저장된 데이터 수만큼 메서드를 반복 실행
+//인덱스 오름차순으로 배열의 데이터를 불러옴,
+//메서드의 반환값이 true면 데이터를 새 배열에 저장해서 새로운 배열을 반환
+//filter 기능과 동일 (기존 데이터를 필터링할 수만 있고 응용할 순 없다)
+const result3 = $.grep(obj, function(data,endIdx){
+    if(data.area =="대전"){
+        return false;
+    }else{
+        return true;
+    }
+});
+
+//$.inArray():배열 안에 데이터가 있는가? -> 존재한다면 해당 데이터의 인덱스값
+// ->존재한다면 해당 데이터의 인덱스값
+//-> 없으면 -1 리턴
+//$.isArray(): 찾고자 하는 데이터가 배열 객체인 true / 아니면 false
+//$.merge(targetArr,subArr): 두배열을 하나의 객체로 결함
+// ->targetArr에 subArr요소를 결함해주는 역할
+
+const areas =["서울","대전","부산","전주"];
+const countries =["한국","일본","스페인","프랑스"];
+const tmpObj = {name:"찬희"};
+
+const targetIdx = $.inArray("대전",areas);
+console.log($.isArray(areas))
+$.merge(areas,countries);
+
+// $("요소").index("찾고자하는데이터")
+const idxNum = $("li").index($("#target"))
+console.log(idxNum);
